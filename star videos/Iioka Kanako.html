@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video List</title>
+    <style>
+        /* Reset and basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            margin-top: 60px;  /* Adjust to prevent overlap with fixed nav */
+        }
+
+        /* Fixed Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+            z-index: 1000;  /* Ensures it stays on top of other elements */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #3385ff;
+            border-radius: 5px;
+        }
+
+        /* Page container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .video-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .video-content {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        /* Next Page Button */
+        .previous-page {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .previous-page a {
+            padding: 10px 20px;
+            background-color: #3385ff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .previous-page a:hover {
+            background-color: #99c2ff;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333;
+        }
+
+        .search-bar input[type="text"] {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+         /* Floating Search Button */
+         .floating-search-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 15px 15px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-search-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1); /* Slightly increase size on hover */
+        }
+
+         /* Photo Gallery Styles */
+         .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 120px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .photo-item img {
+            width: 10%;
+            height: auto;
+            border-bottom: 2px solid #ddd;
+        } 
+
+        .photo-item h3 {
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            margin: 0;
+            background-color: #fafafa;
+        }
+
+        /* Hover Effect */
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+
+       
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+        
+      
+            <li><a href="/meow/main/mmmm.html">Top Videos</a></li>
+            <li><a href="/meow/main/stars.html">Stars</a></li> <!-- Stars Menu Item -->
+        
+        </ul>
+    </nav>
+
+   
+    <h1>Top Videos</h1>
+
+    
+    <!-- Floating Search Button -->
+    <button class="floating-search-button" onclick="scrollToSearch()">🔍</button>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for videos..." onkeyup="searchGallery()">
+        <button onclick="searchGallery()">Search</button>
+    </div>
+
+    <div class="photo-item" >
+        <img src="/meow/photos/Iioka Kanako.jpg"alt="Photo 1">
+        <h3>Iioka Kanako</h3>
+    </div>
+
+
+
+    <div class="container"  id="container">
+        <div class="video-grid">
+
+            <!-- Video Item 1 -->
+            <div class="video-item">
+                <div class="video-content">
+                    <h3 class="video-title">DASS-127</h3>
+                    <iframe width="350px" height="300px" src="https://javtiful.com/embed/bc1b85b239a4cea69f48" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+            <footer>
+                &copy; 2024 Video Platform. All Rights Reserved.
+            </footer>
+        
+        
+            <script>
+                function searchGallery() {
+                    // Get search input value
+                    let searchValue = document.getElementById("searchInput").value.toLowerCase();
+        
+                    // Get all video items
+                    let videos = document.querySelectorAll(".video-item");
+        
+                    // Loop through video items and hide/show based on search
+                    videos.forEach(function(video) {
+                        let title = video.querySelector(".video-title").textContent.toLowerCase();
+                        if (title.includes(searchValue)) {
+                            video.style.display = "block";
+                        } else {
+                            video.style.display = "none";
+                        }
+                    });
+                }
+            </script>
+            <script>
+                // Scroll to the search bar when the floating search button is clicked
+                function scrollToSearch() {
+                    document.getElementById('searchInput').scrollIntoView({behavior: 'smooth'});
+                }
+        
+                // Placeholder function for search functionality
+                function searchGallery() {
+                    // Add your search logic here
+                }
+            </script>
+        </body>
+        </html>
+        
+        
+        
+        

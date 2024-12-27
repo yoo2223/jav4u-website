@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARS</title>
+    <style>
+        /* Reset basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333;
+        }
+
+        .search-bar input[type="text"] {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Photo Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .photo-item h3 {
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            margin: 0;
+            background-color: #fafafa;
+        }
+
+        /* Hover Effect */
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+       /* Fixed Navigation Bar */
+       nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        padding: 10px;
+        z-index: 1000;  /* Ensures it stays on top of other elements */
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin-right: 20px;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px;
+        transition: background-color 0.3s;
+    }
+
+    nav ul li a:hover {
+        background-color: #3385ff; /* Blue on hover */
+        border-radius: 5px;
+    }
+
+        .next-page {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .next-page a {
+            padding: 10px 20px;
+            background-color: #3385ff;  /* Blue color for the next button */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .next-page a:hover {
+            background-color: #99c2ff;  /* Darker blue on hover */
+        }
+
+        .video-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 15px 0;
+        }
+
+        .video-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .video-button:active {
+            background-color: #004085;
+        }
+
+         /* Search Bar Styles */
+         .search-bar {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #333;
+        }
+
+        .search-bar input[type="text"] {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Photo Gallery Styles */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.photo-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    text-align: center;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 500px; /* Set fixed height */
+    object-fit: cover; /* Ensures images maintain aspect ratio while filling the container */
+    border-bottom: 2px solid #ddd;
+}
+
+.photo-item h3 {
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    margin: 0;
+    background-color: #fafafa;
+}
+
+ /* Floating Search Button */
+ .floating-search-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 15px 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-search-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Slightly increase size on hover */
+}
+
+
+ /* Fade-in animation */
+ @keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+
+     <!-- Navigation Bar -->
+    <nav>
+        <ul>
+        
+            <li><a href="index.html">Top Videos</a></li>
+            <li><a href="stars.html">Stars</a></li> <!-- Stars Menu Item -->
+        
+        </ul>
+    </nav>
+
+    <h1>STARS</h1>
+
+    
+  <!-- Floating Search Button -->
+  <button class="floating-search-button" onclick="scrollToSearch()">🔍</button>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for stars..." onkeyup="searchGallery()">
+      <button onclick="searchGallery()">Search</button>
+  </div>
+
+
+    
+    <div class="gallery" id="gallery">
+        <!-- Photo Item 1 -->
+        <div class="photo-item" >
+            <img src="/meow/photos/download.jpg"alt="Photo 1">
+            <h3>Amami Tsubasa</h3>
+            <a href="/meow/star videos/Amami Tsubasa.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 2 -->
+        <div class="photo-item">
+            <img src="/meow/photos/download (1).jpg" alt="Photo 2">
+            <h3>	Julia</h3>
+            <a href="/meow/star videos/Julia.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 3 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Shinoda Yuu.jpg" alt="Photo 3">
+            <h3>Shinoda Yuu</h3>
+            <a href="/meow/star videos/Shinoda Yuu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 4 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Kojima Minami.jpg" alt="Photo 4">
+            <h3>Kojima Minami</h3>
+            <a href="/meow/star videos/Kojima Minami.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 5 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Honma Yuri.jpg" alt="Photo 5">
+            <h3>Honma Yuri</h3>
+            <a href="/meow/star videos/Honma Yuri.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Shouda Chisato.jpg" alt="Photo 6">
+            <h3>Shouda Chisato</h3>
+            <a href="/meow/star videos/Shouda Chisato.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Sayama Ai.jpg" alt="Photo 6">
+            <h3>Sayama Ai</h3>
+            <a href="/meow/star videos/Sayama Ai.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Meguri.jpg" alt="Photo 6">
+            <h3>Meguri</h3>
+            <a href="/meow/star videos/Meguri.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kawakami Yuu.jpg" alt="Photo 6">
+            <h3>Kawakami Yuu</h3>
+            <a href="/meow/star videos/Kawakami Yuu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Asakura Ayane.jpg" alt="Photo 6">
+            <h3>	Asakura Ayane</h3>
+            <a href="/meow/star videos/Asakura Ayane.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Houjou Maki.jpg" alt="Photo 6">
+            <h3>Houjou Maki</h3>
+            <a href="/meow/star videos/Houjou Maki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Shiina Yuna.jpg" alt="Photo 6">
+            <h3>Shiina Yuna</h3>
+            <a href="/meow/star videos/Shiina Yuna.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Tomoda Maki.jpg" alt="Photo 6">
+            <h3>Tomoda Maki</h3>
+            <a href="/meow/star videos/Tomoda Maki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kobayakawa Reiko.jpg" alt="Photo 6">
+            <h3>Kobayakawa Reiko</h3>
+            <a href="/meow/star videos/Kobayakawa Reiko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Shiraki Yuuko.jpg" alt="Photo 6">
+            <h3>Shiraki Yuuko</h3>
+            <a href="/meow/star videos/Shiraki Yuuko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mizuno Asahi.jpg" alt="Photo 6">
+            <h3>Mizuno Asahi</h3>
+            <a href="/meow/star videos/Mizuno Asahi.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Iioka Kanako.jpg" alt="Photo 6">
+            <h3>Iioka Kanako</h3>
+            <a href="/meow/star videos/Iioka Kanako.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Natsume Iroha.jpg" alt="Photo 6">
+            <h3>Natsume Iroha</h3>
+            <a href="/meow/star videos/Natsume Iroha.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Tachibana Mary.jpg" alt="Photo 6">
+            <h3>Tachibana Mary</h3>
+            <a href="/meow/star videos/Tachibana Mary.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Matsushima Aoi.jpg" alt="Photo 6">
+            <h3>Matsushima Aoi</h3>
+            <a href="/meow/star videos/Matsushima Aoi.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mutou Ayaka.jpg" alt="Photo 6">
+            <h3>Mutou Ayaka</h3>
+            <a href="/meow/star videos/Mutou Ayaka.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Misaki Kanna.jpg" alt="Photo 6">
+            <h3>Misaki Kanna</h3>
+            <a href="/meow/star videos/Misaki Kanna.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ooshima Yuuka.jpg" alt="Photo 6">
+            <h3>Ooshima Yuuka</h3>
+            <a href="/meow/star videos/Ooshima Yuuka.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kodama Rumi.jpg" alt="Photo 6">
+            <h3>Kodama Rumi</h3>
+            <a href="/meow/star videos/Kodama Rumi.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mukai Ai.jpg" alt="Photo 6">
+            <h3>Mukai Ai</h3>
+            <a href="/meow/star videos/Mukai Ai.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Isshiki Momoko.jpg" alt="Photo 6">
+            <h3>Isshiki Momoko</h3>
+            <a href="/meow/star videos/Isshiki Momoko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Fukiishi Rena.jpg" alt="Photo 6">
+            <h3>Fukiishi Rena</h3>
+            <a href="/meow/star videos/Fukiishi Rena.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nikaidou Yuri.jpg" alt="Photo 6">
+            <h3>Nikaidou Yuri</h3>
+            <a href="/meow/star videos/Nikaidou Yuri.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Yamagishi Aika.jpg" alt="Photo 6">
+            <h3>Yamagishi Aika</h3>
+            <a href="/meow/star videos/Yamagishi Aika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Yoshitaka Nene.jpg" alt="Photo 6">
+            <h3>Yoshitaka Nene</h3>
+            <a href="/meow/star videos/Yoshitaka Nene.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kimijima Mio.jpg" alt="Photo 6">
+            <h3>Kimijima Mio</h3>
+            <a href="/meow/star videos/Kimijima Mio.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Jinguuji Nao.jpg" alt="Photo 6">
+            <h3>Jinguuji Nao</h3>
+            <a href="/meow/star videos/Jinguuji Nao.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Takarada Monami.jpg" alt="Photo 6">
+            <h3>Takarada Monami</h3>
+            <a href="/meow/star videos/Takarada Monami.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mizuno Yuuka.jpg" alt="Photo 6">
+            <h3>Mizuno Yuuka</h3>
+            <a href="/meow/star videos/Mizuno Yuuka.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kawakita Saika.jpg" alt="Photo 6">
+            <h3>Kawakita Saika</h3>
+            <a href="/meow/star videos/Kawakita Saika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Aoi Yurika.jpg" alt="Photo 6">
+            <h3>Aoi Yurika</h3>
+            <a href="/meow/star videos/Aoi Yurika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nishino Miyuki.jpg" alt="Photo 6">
+            <h3>Nishino Miyuki</h3>
+            <a href="/meow/star videos/Nishino Miyuki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Itou Sara.jpg" alt="Photo 6">
+            <h3>Itou Sara</h3>
+            <a href="/meow/star videos/Itou Sara.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kusakabe Kana.jpg" alt="Photo 6">
+            <h3>Kusakabe Kana</h3>
+            <a href="/meow/star videos/Kusakabe Kana.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Neo Akari.jpg" alt="Photo 6">
+            <h3>Neo Akari</h3>
+            <a href="/meow/star videos/Neo Akari.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Suzumori Remu.jpg" alt="Photo 6">
+            <h3>Suzumori Remu</h3>
+            <a href="/meow/star videos/Suzumori Remu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Satozaki Aika.jpg" alt="Photo 6">
+            <h3>Satozaki Aika</h3>
+            <a href="/meow/star videos/Satozaki Aika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Iwasa Mei.jpg" alt="Photo 6">
+            <h3>	Iwasa Mei</h3>
+            <a href="/meow/star videos/Iwasa Mei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Fukada Mei.jpg" alt="Photo 6">
+            <h3>Fukada Mei</h3>
+            <a href="/meow/star videos/Fukada Mei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mino Suzume.jpg" alt="Photo 6">
+            <h3>Mino Suzume</h3>
+            <a href="/meow/star videos/Mino Suzume.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nakayama Fumika.jpg" alt="Photo 6">
+            <h3>Nakayama Fumika</h3>
+            <a href="/meow/star videos/Nakayama Fumika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ono Yuuko.jpg" alt="Photo 6">
+            <h3>Ono Yuuko</h3>
+            <a href="/meow/star videos/Ono Yuuko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Souma Akane.jpg" alt="Photo 6">
+            <h3>Souma Akane</h3>
+            <a href="/meow/star videos/Souma Akane.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kinoshita Ririko.jpg" alt="Photo 6">
+            <h3>Kinoshita Ririko</h3>
+            <a href="/meow/star videos/Kinoshita Ririko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Okae Rin.jpg" alt="Photo 6">
+            <h3>	Okae Rin</h3>
+            <a href="/meow/star videos/Okae Rin.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kano Ai.jpg" alt="Photo 6">
+            <h3>Kano Ai</h3>
+            <a href="/meow/star videos/Kano Ai.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Shiromine Miu.jpg" alt="Photo 6">
+            <h3>	Shiromine Miu</h3>
+            <a href="/meow/star videos/Shiromine Miu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Yuzuriha Karen.jpg" alt="Photo 6">
+            <h3>Yuzuriha Karen</h3>
+            <a href="/meow/star videos/Yuzuriha Karen.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kujou Michiru.jpg" alt="Photo 6">
+            <h3>Kujou Michiru</h3>
+            <a href="/meow/star videos/Kujou Michiru.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ichikawa Kyouko.jpg" alt="Photo 6">
+            <h3>	Ichikawa Kyouko</h3>
+            <a href="/meow/star videos/Ichikawa Kyouko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Takigawa Eri.jpg" alt="Photo 6">
+            <h3>Takigawa Eri</h3>
+            <a href="/meow/star videos/Takigawa Eri.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ayumi Ryou.jpg" alt="Photo 6">
+            <h3>Ayumi Ryou</h3>
+            <a href="/meow/star videos/Ayumi Ryou.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ooishi Saki.jpg" alt="Photo 6">
+            <h3>Ooishi Saki</h3>
+            <a href="/meow/star videos/Ooishi Saki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Tomiyasu Reona.jpg" alt="Photo 6">
+            <h3>Tomiyasu Reona</h3>
+            <a href="/meow/star videos/Tomiyasu Reona.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kisaki Suzuka.jpg" alt="Photo 6">
+            <h3>Kisaki Suzuka</h3>
+            <a href="/meow/star videos/Kisaki Suzuka.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kamine Sachika.jpg" alt="Photo 6">
+            <h3>Kamine Sachika</h3>
+            <a href="/meow/star videos/Kamine Sachika.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Ohana Non.jpg" alt="Photo 6">
+            <h3>Ohana Non</h3>
+            <a href="/meow/star videos/Ohana Non.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Akai Miki.jpg" alt="Photo 6">
+            <h3>Akai Miki</h3>
+            <a href="/meow/star videos/Akai Miki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nozaki Mio.jpg" alt="Photo 6">
+            <h3>Nozaki Mio</h3>
+            <a href="/meow/star videos/Nozaki Mio.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kamiki Rei.jpg" alt="Photo 6">
+            <h3>Kamiki Rei</h3>
+            <a href="/meow/star videos/Kamiki Rei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kuno Hinano.jpg" alt="Photo 6">
+            <h3>Kuno Hinano</h3>
+            <a href="/meow/star videos/Kuno Hinano.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Okanishi Tomomi.jpg" alt="Photo 6">
+            <h3>Okanishi Tomomi</h3>
+            <a href="/meow/star videos/Okanishi Tomomi.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Yumino Rimu.jpg" alt="Photo 6">
+            <h3>Yumino Rimu</h3>
+            <a href="/meow/star videos/Yumino Rimu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nagi Hikaru.jpg" alt="Photo 6">
+            <h3>	Nagi Hikaru</h3>
+            <a href="/meow/star videos/Nagi Hikaru.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Hayama Sayuriu.jpg" alt="Photo 6">
+            <h3>Hayama Sayuriu</h3>
+            <a href="/meow/star videos/Hayama Sayuriu.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Toujou Mirei.jpg" alt="Photo 6">
+            <h3>Toujou Mirei</h3>
+            <a href="/meow/star videos/Toujou Mirei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Itsukaichi Mei.jpg" alt="Photo 6">
+            <h3>Itsukaichi Mei</h3>
+            <a href="/meow/star videos/Itsukaichi Mei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Nanatsuki Rina.jpg" alt="Photo 6">
+            <h3>Nanatsuki Rina</h3>
+            <a href="/meow/star videos/Nanatsuki Rina.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Hongou Ai.jpg" alt="Photo 6">
+            <h3>Hongou Ai</h3>
+            <a href="/meow/star videos/Hongou Ai.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kimura Rei.jpg" alt="Photo 6">
+            <h3>Kimura Rei</h3>
+            <a href="/meow/star videos/Kimura Rei.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kokushou Aya.jpg" alt="Photo 6">
+            <h3>Kokushou Aya</h3>
+            <a href="/meow/star videos/Kokushou Aya.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Kagura Momoka.jpg" alt="Photo 6">
+            <h3>Kagura Momoka</h3>
+            <a href="/meow/star videos/Kagura Momoka.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Mori Ayami.jpg" alt="Photo 6">
+            <h3>Mori Ayami</h3>
+            <a href="/meow/star videos/Mori Ayami.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Minato Sumire.jpg" alt="Photo 6">
+            <h3>	Minato Sumire</h3>
+            <a href="/meow/star videos/Minato Sumire.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+         <!-- Photo Item 6 -->
+         <div class="photo-item">
+            <img src="/meow/photos/Niimura Akari.jpg" alt="Photo 6">
+            <h3>Niimura Akari</h3>
+            <a href="/meow/star videos/Niimura Akari.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Toyosaki Misato.jpg" alt="Photo 6">
+            <h3>Toyosaki Misato 	
+            </h3>
+            <a href="/meow/star videos/Toyosaki Misato.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Yoshii Miki.jpg" alt="Photo 6">
+            <h3>Yoshii Miki 	
+            </h3>
+            <a href="/meow/star videos/Yoshii Miki.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <!-- Photo Item 6 -->
+        <div class="photo-item">
+            <img src="/meow/photos/Isawa Ryouko.jpg" alt="Photo 6">
+            <h3>Isawa Ryouko 
+            </h3>
+            <a href="/meow/star videos/Isawa Ryouko.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <div class="photo-item">
+            <img src="/meow/photos/Miyashita Rena.jpg" alt="Photo 6">
+            <h3>Miyashita Rena
+            </h3>
+            <a href="/meow/star videos/Miyashita Rena.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <div class="photo-item">
+            <img src="/meow/photos/Eriko Miura.jpg" alt="Photo 6">
+            <h3>Eriko Miura
+            </h3>
+            <a href="/meow/star videos/Eriko Miura.html" target="_blank" class="video-button">Video</a>
+        </div>
+
+        <div class="photo-item">
+            <img src="/meow/photos/Reiran Akame.jpg" alt="Photo 6">
+            <h3>Reiran Akame 
+            </h3>
+            <a href="/meow/star videos/Reiran Akame.html" target="_blank" class="video-button">Video</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Video Platform. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Filters gallery items based on the search query
+        function searchGallery() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const gallery = document.getElementById('gallery');
+            const photos = gallery.getElementsByClassName('photo-item');
+
+            for (let photo of photos) {
+                const starName = photo.getAttribute('data-name').toLowerCase();
+                photo.style.display = starName.includes(searchInput) ? '' : 'none';
+            }
+        }
+
+        // Smoothly scrolls to the search bar
+        function scrollToSearch() {
+            document.querySelector('.search-bar').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+ 
+
+   
+  
+</body>
+</html>
